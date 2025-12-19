@@ -1,0 +1,50 @@
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  transition: backdrop-filter 0.5s ease;
+}
+
+header ul {
+  display: flex;
+  gap: 10px;
+}
+
+header nav a {
+  display: block;
+  color: gray;
+}
+
+header nav a:hover {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  header nav {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+  }
+  header ul {
+    flex-direction: column;
+    position: relative;
+  }
+  header button {
+    background-color: green;
+    transition: transform 0.5s ease forwards;
+  }
+  header button:active {
+    transform: scale(0.9);
+  }
+
+  header li {
+    border: 1px solid gray;
+    background-color: black;
+    text-align: center;
+  }
+}
