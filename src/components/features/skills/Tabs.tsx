@@ -7,7 +7,7 @@ export default function Tabs({ setActive }: SetActive) {
   const [tabActive, setTabActive] = useState(0);
 
   return (
-    <div className="flex justify-between mb-5 bg-[#22222288] p-2 rounded-[7px]">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 mb-5 bg-[#22222288] p-2 rounded-[7px]">
       {Object.keys(skillsByIndustry).map((industry, i) => (
         <button
           key={industry}
@@ -21,7 +21,9 @@ export default function Tabs({ setActive }: SetActive) {
               : "outline-[orangered] text-[white]"
           }`}
         >
-          <span className="block w-full h-full px-[10px]">{industry}</span>
+          <span className="block w-full h-full px-[10px] truncate">
+            {industry}
+          </span>
         </button>
       ))}
     </div>

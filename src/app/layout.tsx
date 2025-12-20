@@ -32,25 +32,7 @@ export default function RootLayout({
         <IntroAnimation />
         <FollowMouse />
         <Wrapper>
-          <main className="flex flex-col gap-2 px-5">
-            {children} Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Possimus, repudiandae sunt, harum in reiciendis quibusdam culpa
-            quasi adipisci doloremque illo blanditiis sed reprehenderit deserunt
-            dolore explicabo nam vitae? Omnis, odit! Possimus, repudiandae sunt,
-            harum in reiciendis quibusdam culpa quasi adipisci doloremque illo
-            blanditiis sed reprehenderit deserunt dolore explicabo nam vitae?
-            Omnis, odit! Possimus, repudiandae sunt, harum in reiciendis
-            quibusdam culpa quasi adipisci doloremque illo blanditiis sed
-            reprehenderit deserunt dolore explicabo nam vitae? Omnis, odit!
-            Possimus, repudiandae sunt, harum in reiciendis quibusdam culpa
-            quasi adipisci doloremque illo blanditiis sed reprehenderit deserunt
-            dolore explicabo nam vitae? Omnis, odit! Possimus, repudiandae sunt,
-            harum in reiciendis quibusdam culpa quasi adipisci doloremque illo
-            blanditiis sed reprehenderit deserunt dolore explicabo nam vitae?
-            Omnis, odit! Possimus, repudiandae sunt, harum in reiciendis
-            quibusdam culpa quasi adipisci doloremque illo blanditiis sed
-            reprehenderit deserunt dolore explicabo nam vitae? Omnis, odit!
-          </main>
+          <main className="flex flex-col gap-2 px-5">{children}</main>
         </Wrapper>
         <SpeedInsights />
       </body>

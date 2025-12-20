@@ -11,7 +11,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
     if (!wrapper) return;
 
     wrapper.addEventListener("scroll", () => {
-      if (wrapper.scrollTop > 100) setIsTop(false);
+      if (wrapper.scrollTop > 50) setIsTop(false);
       else setIsTop(true);
     });
   }, []);
@@ -19,7 +19,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
   return (
     <div
       ref={wrapperRef}
-      className={`fixed flex flex-col gap-2 shadow-[0_0_5px_0_darkcyan] mx-[100px] my-[10px] h-[calc(100vh-20px)] overflow-auto scrollbar-hide`}
+      className={`fixed flex flex-col gap-2 shadow-[0_0_5px_0_darkcyan] my-[10px] mx-[10px] w-[calc(100vw-20px)] h-[calc(100vh-20px)] overflow-auto scrollbar-hide`}
     >
       <Header isTop={isTop} />
       {children}

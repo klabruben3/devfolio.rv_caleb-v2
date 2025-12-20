@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 import Tabs from "./Tabs";
-import { SkillsRadarAll, SkillsRadial } from "./SkillsCharts";
+import { SkillsDescription, SkillsRadial } from "./SkillsCharts";
 
 export default function Skills() {
   const [active, setActive] = useState(0);
@@ -15,7 +15,7 @@ export default function Skills() {
         </p>
         <Tabs setActive={setActive} />
         <SkillsRadial active={active} />
-        <SkillsRadarAll active={active} />
+        <SkillsDescription />
       </div>
     </>
   );

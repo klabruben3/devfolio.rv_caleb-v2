@@ -1,14 +1,4 @@
-import type { Skills, Skill, Avarage } from "./skillTypes";
-
-function avarage(skills: Skill[]): number {
-  let sum = 0;
-
-  for (const s of skills) {
-    sum += s.level;
-  }
-
-  return Math.floor(sum / skills.length);
-}
+import type { Skills } from "./skillTypes";
 
 const skillsByIndustry: Skills = {
   "Front-End Web Development": {
@@ -161,17 +151,4 @@ const skillsByIndustry: Skills = {
   },
 };
 
-const averageSkill: Avarage = [
-  { name: "Aesthetic", A: 55, B: 18, C: 60, D: 45, E: 40 },
-  { name: "Adaptive", A: 88, B: 70, C: 80, D: 60, E: 92 },
-  { name: "Precision", A: 91, B: 55, C: 83, D: 55, E: 88 },
-  { name: "Inventive", A: 85, B: 40, C: 88, D: 50, E: 85 },
-  { name: "Execution", A: 93, B: 68, C: 85, D: 58, E: 94 },
-];
-
-// Calculates the avarage of all skills in each category
-Object.entries(skillsByIndustry).map((industry) => {
-  industry[1].avarage = avarage(industry[1].skills);
-});
-
-export { skillsByIndustry, avarage, averageSkill };
+export { skillsByIndustry };
