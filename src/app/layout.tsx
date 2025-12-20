@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Wrapper } from "@/components/layout";
 import { FollowMouse, IntroAnimation } from "@/components/effects";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const jackInput = localFont({
   src: "../assets/fonts/jackinput/JAi_____.woff2",
@@ -51,6 +52,7 @@ export default function RootLayout({
             reprehenderit deserunt dolore explicabo nam vitae? Omnis, odit!
           </main>
         </Wrapper>
+        <SpeedInsights />
       </body>
     </html>
   );
