@@ -2,7 +2,7 @@ const speed: number = 0.00008;
 const strokeWidth: number = 1;
 const circleRad: number = 3;
 const opacT: number = 0.0005;
-const circleCount: number = 10;
+const circleCount: number = 20;
 let opacity: number = 0;
 
 interface CanvasRef {
@@ -28,10 +28,12 @@ interface Circle extends Vec2 {
 
 const createRandomPos = (): Vec2 => ({
   x:
-    Math.random() * ((canvasRef.canvas as OffscreenCanvas).width - 2 * circleRad) +
+    Math.random() *
+      ((canvasRef.canvas as OffscreenCanvas).width - 2 * circleRad) +
     circleRad,
   y:
-    Math.random() * ((canvasRef.canvas as OffscreenCanvas).height - 2 * circleRad) +
+    Math.random() *
+      ((canvasRef.canvas as OffscreenCanvas).height - 2 * circleRad) +
     circleRad,
 });
 

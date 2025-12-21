@@ -17,7 +17,7 @@ export default function FollowMouse() {
   }, []);
 
   useEffect(() => {
-    if (isMobile) return;
+    // if (isMobile) return;
     const box = boxRef.current;
     if (!box) return;
 
@@ -25,15 +25,18 @@ export default function FollowMouse() {
     let accessible = true;
     let rafId: number | null = null;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointeMove = (e: PointerEvent) => {
       if (rafId !== null) return;
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      const parentEl = el?.closest("nav");
+
+      if (isMobile && parentEl?.tagName !== "NAV") return;
 
       rafId = requestAnimationFrame(() => {
         rafId = null;
 
         const isButton =
-          e.target instanceof HTMLButtonElement ||
-          e.target instanceof HTMLAnchorElement;
+          el instanceof HTMLButtonElement || el instanceof HTMLAnchorElement;
         const scale = isButton ? 0.6 : 1;
         const angle = isButton ? 90 : 0;
 
@@ -65,10 +68,10 @@ export default function FollowMouse() {
       });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("pointermove", handlePointeMove);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("pointermove", handlePointeMove);
       clearTimeout(timeout);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
@@ -77,7 +80,7 @@ export default function FollowMouse() {
   return (
     <div
       ref={boxRef}
-      className="fixed h-[10px] w-[10px] border-[3px] border-[orangered] opacity-0 transition-[opacity,transform] duration-[250ms] ease-out pointer-events-none z-10"
+      className="absolute h-[10px] w-[10px] border-[3px] border-[orangered] opacity-0 transition-[opacity,transform] duration-[250ms] ease-out pointer-events-none z-10"
     ></div>
   );
 }

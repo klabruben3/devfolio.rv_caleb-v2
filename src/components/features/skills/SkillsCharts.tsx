@@ -75,7 +75,7 @@ function SkillsRadial({ active }: { active: number }) {
               label={{
                 position: "insideStart",
                 fill: "white",
-                fontSize: 3,
+                fontSize: 5,
                 formatter: (value) => `${value}%`,
               }}
             >

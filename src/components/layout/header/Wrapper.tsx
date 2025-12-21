@@ -19,7 +19,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
   return (
     <div
       ref={wrapperRef}
-      className={`fixed flex flex-col gap-2 shadow-[0_0_5px_0_darkcyan] my-[10px] mx-[10px] w-[calc(100vw-20px)] h-[calc(100vh-20px)] overflow-auto scrollbar-hide`}
+      className={`fixed flex flex-col gap-2 shadow-[0_0_5px_0_darkcyan] my-[10px] mx-[10px] w-[calc(100vw-20px)] h-[calc(100vh-20px)] overflow-y-auto overflow-x-hidden scrollbar-hide`}
     >
       <Header isTop={isTop} />
       {children}

@@ -31,10 +31,10 @@ export default function RootLayout({
       <body className={`${jackInput.className}`}>
         <IntroAnimation />
         <FollowMouse />
+        <SpeedInsights />
         <Wrapper>
           <main className="flex flex-col gap-2 px-5">{children}</main>
         </Wrapper>
-        <SpeedInsights />
       </body>
     </html>
   );
