@@ -1,18 +1,19 @@
 "use client";
 import { motion } from "motion/react";
+import { FollowMouse } from "../effects";
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Terminal-like header */}
       <div className="fixed top-6 left-6 font-mono text-xs text-neutral-600 z-50">
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-          <span>Admin.online</span>
+        <div className="flex items-center">
+          <FollowMouse />
+          <span className="ml-3">Admin.online</span>
         </div>
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto text-center">
+      <div className="relative z-10 max-w-5xl mx-auto text-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -33,7 +34,7 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="px-6 py-3 bg-white text-black hover:bg-transparent hover:text-[wheat] hover:outline hover:outline-white transition-all duration-300"
+              className="px-6 py-3 bg-white text-black hover:bg-transparent hover:text-[wheat] hover:outline hover:outline-white transition-[background-color] duration-300"
             >
               View Projects
             </a>

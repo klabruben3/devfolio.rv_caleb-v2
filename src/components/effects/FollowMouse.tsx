@@ -21,8 +21,11 @@ export default function FollowMouse() {
     const box = boxRef.current;
     if (!box) return;
 
-    let timeout: ReturnType<typeof setTimeout>;
+    let firstTimeout: ReturnType<typeof setTimeout>;
+    let secondTimeout: ReturnType<typeof setTimeout>;
+    let thirdTimeout: ReturnType<typeof setTimeout>;
     let accessible = true;
+    let isVisible = false;
     let rafId: number | null = null;
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -34,39 +37,66 @@ export default function FollowMouse() {
 
         const isButton =
           el instanceof HTMLButtonElement || el instanceof HTMLAnchorElement;
-        const scale = isButton ? 1.5 : 1;
 
-        clearTimeout(timeout);
+        clearTimeout(firstTimeout);
+        clearTimeout(secondTimeout);
+        clearTimeout(thirdTimeout);
 
-        if (box.classList.contains("opacity-0")) {
-          box.classList.remove("opacity-0");
-          box.classList.add("opacity-100");
+        box.style.transform = `translate(-50%, -50%) translate(${
+          e.clientX - box.offsetLeft
+        }px, ${e.clientY - box.offsetTop}px)`;
+        if (!isVisible) {
+          box.classList.remove("animate-pulse", "bg-green-500");
+          box.classList.add(
+            "animate-none",
+            "bg-black",
+            "border-2",
+            "border-white"
+          );
+
+          isVisible = true;
         }
 
-        box.style.transform = `translate(-50%, -50%) translate(${e.clientX}px, ${e.clientY}px) scale(${scale})`;
-
         if (isButton && accessible) {
-          box.style.backgroundColor = "white";
-          box.style.borderColor = "black";
+          box.classList.remove("bg-black", "border-white");
+          box.classList.add("bg-white", "border-black");
           accessible = false;
         } else if (!isButton && !accessible) {
-          box.style.backgroundColor = "transparent";
-          box.style.borderColor = "white";
+          box.classList.remove("bg-white", "border-black");
+          box.classList.add("bg-black", "border-white");
           accessible = true;
         }
 
-        timeout = setTimeout(() => {
+        firstTimeout = setTimeout(() => {
           box.classList.remove("opacity-100");
           box.classList.add("opacity-0");
-        }, 500);
+        }, 1000);
+
+        secondTimeout = setTimeout(() => {
+          !accessible
+            ? box.classList.remove("bg-white", "border-black")
+            : box.classList.remove("bg-black", "border-white");
+          box.classList.remove("border-2");
+          accessible = !accessible ? true : accessible;
+          box.style.transform = "translate(0, 0)";
+          box.classList.add("bg-green-500");
+        }, 1250);
+
+        thirdTimeout = setTimeout(() => {
+          box.classList.remove("opacity-0");
+          box.classList.add("opacity-100", "animate-pulse");
+          isVisible = false;
+        }, 1500);
       });
     };
 
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener("pointermove", handleMouseMove);
-      clearTimeout(timeout);
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(firstTimeout);
+      clearTimeout(secondTimeout);
+      clearTimeout(thirdTimeout);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
   }, [isMobile]);
@@ -74,7 +104,7 @@ export default function FollowMouse() {
   return (
     <div
       ref={boxRef}
-      className="fixed h-[5px] w-[5px] bg-black border-[1.5px] border-[white] opacity-0 transition-[opacity,transform] duration-[200ms] rounded-full ease-out pointer-events-none z-50"
+      className="fixed h-1.5 w-1.5 opacity-100 transition-[transform,opacity,background-color] duration-[250ms] rounded-full ease-out pointer-events-none z-50 bg-[green] animate-pulse"
     ></div>
   );
 }
