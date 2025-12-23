@@ -1,16 +1,8 @@
 "use client";
-import { motion, useMotionValue, useTransform, animate } from "motion/react";
+import { motion, animate } from "motion/react";
 import { useEffect, useState } from "react";
-import { Code2, GitCommit, Zap, Database } from "lucide-react";
-
-interface StatProps {
-  icon: React.ElementType;
-  label: string;
-  value: number;
-  suffix?: string;
-  prefix?: string;
-  decimals?: number;
-}
+import { StatProps } from "../data/types";
+import { stats } from "../data";
 
 function AnimatedStat({
   icon: Icon,
@@ -63,37 +55,6 @@ function AnimatedStat({
 }
 
 export default function LiveStats() {
-  const stats = [
-    {
-      icon: Code2,
-      label: "Lines of Code",
-      value: 127,
-      suffix: "K+",
-      decimals: 0,
-    },
-    {
-      icon: GitCommit,
-      label: "Commits",
-      value: 2847,
-      suffix: "+",
-      decimals: 0,
-    },
-    {
-      icon: Zap,
-      label: "Projects Completed",
-      value: 42,
-      suffix: "",
-      decimals: 0,
-    },
-    {
-      icon: Database,
-      label: "APIs Built",
-      value: 18,
-      suffix: "+",
-      decimals: 0,
-    },
-  ];
-
   return (
     <section className="py-20 px-6 relative overflow-hidden">
       {/* Grid background */}
