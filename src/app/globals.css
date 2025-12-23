@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  cursor: none;
+  scrollbar-width: none;
+}
+
+:root::-webkit-scrollbar {
+  display: none;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,13 +20,17 @@
 }
 span,
 p {
-  cursor: default;
   pointer-events: none;
   user-select: none;
 }
 
+button,
+a {
+  cursor: none;
+}
+
 body {
-  background: var(--background);
+  background: black;
   color: var(--foreground);
 }
 

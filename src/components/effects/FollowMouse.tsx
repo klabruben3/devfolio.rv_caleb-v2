@@ -7,7 +7,7 @@ export default function FollowMouse() {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
     const handleResize = (e: MediaQueryListEvent) => {
       setIsMobile(e.matches);
     };
@@ -17,7 +17,7 @@ export default function FollowMouse() {
   }, []);
 
   useEffect(() => {
-    // if (isMobile) return;
+    if (isMobile) return;
     const box = boxRef.current;
     if (!box) return;
 
@@ -25,20 +25,16 @@ export default function FollowMouse() {
     let accessible = true;
     let rafId: number | null = null;
 
-    const handlePointeMove = (e: PointerEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (rafId !== null) return;
-      const el = document.elementFromPoint(e.clientX, e.clientY);
-      const parentEl = el?.closest("nav");
-
-      if (isMobile && parentEl?.tagName !== "NAV") return;
+      const el = e.target;
 
       rafId = requestAnimationFrame(() => {
         rafId = null;
 
         const isButton =
           el instanceof HTMLButtonElement || el instanceof HTMLAnchorElement;
-        const scale = isButton ? 0.6 : 1;
-        const angle = isButton ? 90 : 0;
+        const scale = isButton ? 1.5 : 1;
 
         clearTimeout(timeout);
 
@@ -47,17 +43,15 @@ export default function FollowMouse() {
           box.classList.add("opacity-100");
         }
 
-        box.style.transform = `translate(-50%, -50%) translate(${e.clientX}px, ${e.clientY}px) rotate(${angle}deg) scale(${scale})`;
+        box.style.transform = `translate(-50%, -50%) translate(${e.clientX}px, ${e.clientY}px) scale(${scale})`;
 
         if (isButton && accessible) {
-          box.style.backgroundColor = "orangered";
-          box.style.border = "none";
-          box.style.borderRadius = "50%";
+          box.style.backgroundColor = "white";
+          box.style.borderColor = "black";
           accessible = false;
         } else if (!isButton && !accessible) {
           box.style.backgroundColor = "transparent";
-          box.style.border = "3px solid orangered";
-          box.style.borderRadius = "0";
+          box.style.borderColor = "white";
           accessible = true;
         }
 
@@ -68,10 +62,10 @@ export default function FollowMouse() {
       });
     };
 
-    window.addEventListener("pointermove", handlePointeMove);
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener("pointermove", handlePointeMove);
+      window.removeEventListener("pointermove", handleMouseMove);
       clearTimeout(timeout);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
@@ -80,7 +74,7 @@ export default function FollowMouse() {
   return (
     <div
       ref={boxRef}
-      className="absolute h-[10px] w-[10px] border-[3px] border-[orangered] opacity-0 transition-[opacity,transform] duration-[250ms] ease-out pointer-events-none z-10"
+      className="fixed h-[5px] w-[5px] bg-black border-[1.5px] border-[white] opacity-0 transition-[opacity,transform] duration-[200ms] rounded-full ease-out pointer-events-none z-50"
     ></div>
   );
 }

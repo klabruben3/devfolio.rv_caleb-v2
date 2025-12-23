@@ -15,7 +15,7 @@ export default function Tabs({ setActive }: SetActive) {
             setActive(i);
             setTabActive(i);
           }}
-          className={`cursor-pointer rounded-[5px] transition-[color] transition-duration-[150ms] ease-in focus:outline-[white] focus:text-[orangered] outline outline-2 outline-dashed ${
+          className={`rounded-[5px] transition-[color] transition-duration-[150ms] ease-in focus:outline-[white] focus:text-[orangered] outline outline-2 outline-dashed ${
             tabActive == i
               ? "outline-white text-[orangered]"
               : "outline-[orangered] text-[white]"

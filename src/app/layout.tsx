@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Wrapper } from "@/components/layout";
 import { FollowMouse, IntroAnimation } from "@/components/effects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -32,9 +31,7 @@ export default function RootLayout({
         <IntroAnimation />
         <FollowMouse />
         <SpeedInsights />
-        <Wrapper>
-          <main className="flex flex-col gap-2 px-5">{children}</main>
-        </Wrapper>
+        <main>{children}</main>
       </body>
     </html>
   );

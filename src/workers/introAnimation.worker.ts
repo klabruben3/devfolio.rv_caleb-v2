@@ -1,8 +1,8 @@
 const speed: number = 0.00008;
-const strokeWidth: number = 1;
-const circleRad: number = 3;
+const strokeWidth: number = 0.5;
+const circleRad: number = 1.5;
 const opacT: number = 0.0005;
-const circleCount: number = 20;
+const circleCount: number = 15;
 let opacity: number = 0;
 
 interface CanvasRef {
@@ -53,7 +53,7 @@ const createCircles = (): void => {
 
 const connectCircles = (): void => {
   const ctx = ctxRef.ctx as OffscreenCanvasRenderingContext2D;
-  ctx.strokeStyle = `rgba(0, 186, 255, ${Math.min(opacity, 0.1)})`;
+  ctx.strokeStyle = `rgba(255, 255, 255, ${Math.min(opacity, 0.2)})`;
   ctx.lineWidth = strokeWidth;
   ctx.beginPath();
   ctx.lineCap = "round";
@@ -75,12 +75,15 @@ const connectCircles = (): void => {
 
 const drawCircles = (): void => {
   const ctx = ctxRef.ctx as OffscreenCanvasRenderingContext2D;
-  ctx.fillStyle = `rgba(255, 69, 0, ${opacity})`;
+  ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
+  ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+  ctx.lineWidth = 0.5;
 
   for (const c of circles) {
     ctx.beginPath();
     ctx.arc(c.x, c.y, circleRad, 0, 2 * Math.PI);
     ctx.fill();
+    ctx.stroke();
   }
 };
 
@@ -112,15 +115,13 @@ let animationFrame: number;
 const animate = (): void => {
   const ctx = ctxRef.ctx as OffscreenCanvasRenderingContext2D;
   const canvas = canvasRef.canvas as OffscreenCanvas;
-
-  ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   connectCircles();
   drawCircles();
   moveCircles();
 
-  opacity += opacity < 0.3 ? opacT : 0;
+  opacity += opacity < 0.5 ? opacT : 0;
 
   animationFrame = requestAnimationFrame(animate);
 };
