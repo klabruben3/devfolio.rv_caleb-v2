@@ -3,6 +3,7 @@ import { motion, animate } from "motion/react";
 import { useEffect, useState } from "react";
 import { StatProps } from "../data/types";
 import { stats } from "../data";
+import { GridBackground } from "./projects/ProjectBits";
 
 function AnimatedStat({
   icon: Icon,
@@ -58,27 +59,7 @@ export default function LiveStats() {
   return (
     <section className="py-20 px-6 relative overflow-hidden">
       {/* Grid background */}
-      <div className="absolute inset-0">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern
-              id="stats-grid"
-              width="30"
-              height="30"
-              patternUnits="userSpaceOnUse"
-            >
-              <path
-                d="M 30 0 L 0 0 0 30"
-                fill="none"
-                stroke="white"
-                strokeWidth="1"
-                strokeOpacity={0.1}
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#stats-grid)" />
-        </svg>
-      </div>
+      <GridBackground />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div

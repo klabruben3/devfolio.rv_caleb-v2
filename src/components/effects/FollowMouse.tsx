@@ -30,13 +30,12 @@ export default function FollowMouse() {
 
     const handleMouseMove = (e: MouseEvent) => {
       if (rafId !== null) return;
-      const el = e.target;
+      const el = e.target as HTMLElement;
 
       rafId = requestAnimationFrame(() => {
         rafId = null;
 
-        const isButton =
-          el instanceof HTMLButtonElement || el instanceof HTMLAnchorElement;
+        const isButton = el?.closest("button") || el?.closest("a");
 
         clearTimeout(firstTimeout);
         clearTimeout(secondTimeout);
@@ -70,7 +69,7 @@ export default function FollowMouse() {
         firstTimeout = setTimeout(() => {
           box.classList.remove("opacity-100");
           box.classList.add("opacity-0");
-        }, 1000);
+        }, 3000);
 
         secondTimeout = setTimeout(() => {
           !accessible
@@ -80,13 +79,13 @@ export default function FollowMouse() {
           accessible = !accessible ? true : accessible;
           box.style.transform = "translate(0, 0)";
           box.classList.add("bg-green-500");
-        }, 1250);
+        }, 3150);
 
         thirdTimeout = setTimeout(() => {
           box.classList.remove("opacity-0");
           box.classList.add("opacity-100", "animate-pulse");
           isVisible = false;
-        }, 1500);
+        }, 3300);
       });
     };
 
@@ -104,7 +103,7 @@ export default function FollowMouse() {
   return (
     <div
       ref={boxRef}
-      className="fixed h-1.5 w-1.5 opacity-100 transition-[transform,opacity,background-color] duration-[250ms] rounded-full ease-out pointer-events-none z-50 bg-[green] animate-pulse"
+      className="fixed h-1.5 w-1.5 opacity-100 transition-[transform,opacity,background-color] duration-[150ms] rounded-full ease-out pointer-events-none z-50 bg-[green] animate-pulse"
     ></div>
   );
 }

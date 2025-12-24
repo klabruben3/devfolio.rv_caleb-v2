@@ -1,4 +1,4 @@
-import { Hero, Projects, Footer, LiveStats, About } from "@/components/layout";
+import { Hero, Projects, LiveStats, About } from "@/components/layout";
 
 export default function Home() {
   return (
@@ -7,7 +7,6 @@ export default function Home() {
       <LiveStats />
       <About />
       <Projects />
-      <Footer />
     </>
   );
 }

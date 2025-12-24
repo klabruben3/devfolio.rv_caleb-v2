@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { IntroAnimation } from "@/components/effects";
+import { IntroAnimation, Home } from "@/components/effects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Footer } from "@/components/layout";
 
 const jackInput = localFont({
   src: "../assets/fonts/jackinput/JAi_____.woff2",
@@ -29,8 +30,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${jackInput.className}`}>
         <IntroAnimation />
+        <Home />
         <SpeedInsights />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
