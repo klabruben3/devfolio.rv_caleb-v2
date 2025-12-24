@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function FollowMouse() {
   const boxRef = useRef<HTMLDivElement | null>(null);
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(true);
 
   useEffect(() => {
     const detectPointer = (e: PointerEvent): void => {
@@ -52,7 +52,9 @@ export default function FollowMouse() {
         clearTimeout(secondTimeout);
         clearTimeout(thirdTimeout);
 
-        box.style.transform = `translate(-50%, -50%) translate(${e.clientX}px, ${e.clientY}px)`;
+        box.style.transform = `translate(-50%, -50%) translate(${
+          e.clientX - box.offsetLeft
+        }px, ${e.clientY - box.offsetTop}px)`;
 
         if (!isVisible) {
           box.classList.remove("animate-pulse", "bg-green-500");
