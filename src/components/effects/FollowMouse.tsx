@@ -4,32 +4,43 @@ import { useEffect, useRef, useState } from "react";
 
 export default function FollowMouse() {
   const boxRef = useRef<HTMLDivElement | null>(null);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(max-width: 767px)");
-    const handleResize = (e: MediaQueryListEvent) => {
-      setIsMobile(e.matches);
+    const detectPointer = (e: PointerEvent): void => {
+      if (e.pointerType === "touch") {
+        setEnabled(false);
+      } else {
+        setEnabled(true);
+      }
+
+      window.removeEventListener("pointerdown", detectPointer);
     };
-    setIsMobile(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleResize);
-    return () => mediaQuery.removeEventListener("change", handleResize);
+
+    window.addEventListener("pointerdown", detectPointer, { once: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", detectPointer);
+    };
   }, []);
 
   useEffect(() => {
-    if (isMobile) return;
+    if (!enabled) return;
+
     const box = boxRef.current;
     if (!box) return;
 
     let firstTimeout: ReturnType<typeof setTimeout>;
     let secondTimeout: ReturnType<typeof setTimeout>;
     let thirdTimeout: ReturnType<typeof setTimeout>;
-    let accessible = true;
-    let isVisible = false;
     let rafId: number | null = null;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    let accessible = true;
+    let isVisible = false;
+
+    const handlePointerMove = (e: PointerEvent) => {
       if (rafId !== null) return;
+
       const el = e.target as HTMLElement;
 
       rafId = requestAnimationFrame(() => {
@@ -41,69 +52,71 @@ export default function FollowMouse() {
         clearTimeout(secondTimeout);
         clearTimeout(thirdTimeout);
 
-        box.style.transform = `translate(-50%, -50%) translate(${
-          e.clientX - box.offsetLeft
-        }px, ${e.clientY - box.offsetTop}px)`;
+        box.style.transform = `translate(-50%, -50%) translate(${e.clientX}px, ${e.clientY}px)`;
+
         if (!isVisible) {
           box.classList.remove("animate-pulse", "bg-green-500");
-          box.classList.add(
-            "animate-none",
-            "bg-black",
-            "border-2",
-            "border-white"
-          );
-
+          box.classList.add("bg-black", "border-2", "border-white");
           isVisible = true;
         }
 
         if (isButton && accessible) {
-          box.classList.remove("bg-black", "border-white");
-          box.classList.add("bg-white", "border-black");
+          box.classList.replace("bg-black", "bg-white");
+          box.classList.replace("border-white", "border-black");
           accessible = false;
         } else if (!isButton && !accessible) {
-          box.classList.remove("bg-white", "border-black");
-          box.classList.add("bg-black", "border-white");
+          box.classList.replace("bg-white", "bg-black");
+          box.classList.replace("border-black", "border-white");
           accessible = true;
         }
 
         firstTimeout = setTimeout(() => {
-          box.classList.remove("opacity-100");
           box.classList.add("opacity-0");
         }, 3000);
 
         secondTimeout = setTimeout(() => {
-          !accessible
-            ? box.classList.remove("bg-white", "border-black")
-            : box.classList.remove("bg-black", "border-white");
-          box.classList.remove("border-2");
-          accessible = !accessible ? true : accessible;
-          box.style.transform = "translate(0, 0)";
+          box.classList.remove("border-2", "bg-black", "bg-white");
           box.classList.add("bg-green-500");
-        }, 3150);
+          box.style.transform = "translate(0, 0)";
+          accessible = true;
+        }, 3100);
 
         thirdTimeout = setTimeout(() => {
           box.classList.remove("opacity-0");
           box.classList.add("opacity-100", "animate-pulse");
           isVisible = false;
-        }, 3300);
+        }, 3200);
       });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("pointermove", handlePointerMove);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("pointermove", handlePointerMove);
       clearTimeout(firstTimeout);
       clearTimeout(secondTimeout);
       clearTimeout(thirdTimeout);
       if (rafId !== null) cancelAnimationFrame(rafId);
     };
-  }, [isMobile]);
+  }, [enabled]);
 
   return (
     <div
       ref={boxRef}
-      className="fixed h-1.5 w-1.5 opacity-100 transition-[transform,opacity,background-color] duration-[150ms] rounded-full ease-out pointer-events-none z-50 bg-[green] animate-pulse"
-    ></div>
+      aria-hidden
+      className="
+        fixed
+        h-1.5
+        w-1.5
+        rounded-full
+        pointer-events-none
+        z-50
+        bg-green-500
+        opacity-100
+        animate-pulse
+        transition-[transform,opacity,background-color]
+        duration-[100ms]
+      "
+    />
   );
 }

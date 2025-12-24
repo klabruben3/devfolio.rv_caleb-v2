@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { IntroAnimation, Home } from "@/components/effects";
+import { IntroAnimation, FloatingLinks } from "@/components/effects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Footer } from "@/components/layout";
 
@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${jackInput.className}`}>
         <IntroAnimation />
-        <Home />
+        <FloatingLinks />
         <SpeedInsights />
         <main>{children}</main>
         <Footer />

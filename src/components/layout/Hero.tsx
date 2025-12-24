@@ -29,7 +29,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            transition={{ duration: 0.8 }}
             className="flex justify-center gap-4 flex-wrap"
           >
             <a

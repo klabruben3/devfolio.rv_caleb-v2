@@ -1,19 +1,16 @@
 "use client";
-import { useRef, useEffect } from "react";
+
+import { useEffect, useRef } from "react";
+import type { FloatButton } from "../data/types";
+import { motion } from "motion/react";
 
 export default function FloatingButton({
   title,
   icon: Icon,
   position,
-  buttonWidth,
+  index = 0,
   iconProps,
-}: {
-  title: string;
-  icon: React.ElementType;
-  position: { left: number; top: number };
-  buttonWidth: number;
-  iconProps?: React.ComponentProps<React.ElementType>;
-}) {
+}: FloatButton) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const dragStyle = [
     "outline",
@@ -28,34 +25,17 @@ export default function FloatingButton({
 
     let pressTimeout: ReturnType<typeof setTimeout> | null = null;
     let dragging = false;
-
     let grabX = 0;
     let grabY = 0;
+    let rafId: number | null = null;
 
-    const onPointerDown = (e: PointerEvent) => {
-      pressTimeout = setTimeout(() => {
-        const rect = button.getBoundingClientRect();
-
-        grabX = e.clientX - rect.left;
-        grabY = e.clientY - rect.top;
-
-        dragging = true;
-        button.setPointerCapture(e.pointerId);
-
-        button.classList.add(...dragStyle);
-        button.classList.remove("bg-[wheat]/50");
-      }, 300);
-    };
-
-    let rafId: number | null;
     const onPointerMove = (e: PointerEvent) => {
-      if (!dragging || rafId != null) return;
+      if (!dragging || rafId !== null) return;
 
       rafId = requestAnimationFrame(() => {
         rafId = null;
         const x = e.clientX - grabX - position.left;
         const y = e.clientY - grabY - position.top;
-
         button.style.transform = `translate(${x}px, ${y}px)`;
       });
     };
@@ -73,43 +53,63 @@ export default function FloatingButton({
 
       button.classList.add("bg-[wheat]/50");
       button.classList.remove(...dragStyle);
+
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+    };
+
+    const onPointerDown = (e: PointerEvent) => {
+      pressTimeout = setTimeout(() => {
+        const rect = button.getBoundingClientRect();
+        grabX = e.clientX - rect.left;
+        grabY = e.clientY - rect.top;
+
+        dragging = true;
+        button.setPointerCapture(e.pointerId);
+
+        button.classList.add(...dragStyle);
+        button.classList.remove("bg-[wheat]/50");
+
+        window.addEventListener("pointermove", onPointerMove);
+        window.addEventListener("pointerup", onPointerUp);
+      }, 300);
     };
 
     button.addEventListener("pointerdown", onPointerDown);
-    window.addEventListener("pointermove", onPointerMove);
-    window.addEventListener("pointerup", onPointerUp);
 
     return () => {
       button.removeEventListener("pointerdown", onPointerDown);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
+      if (pressTimeout) clearTimeout(pressTimeout);
     };
-  }, []);
+  }, [position.left, position.top]);
 
   return (
-    <button
+    <motion.button
       ref={buttonRef}
       aria-label={title}
+      title={title}
       className="
         fixed
         z-50
         rounded-lg
         bg-[wheat]/50
         touch-none
-        transition-[background-color,transform]
-        duration-100
-        flex
-        justify-center
-        items-center
+        p-3
       "
+      initial={{ opacity: 0, transform: "translateX(50px)" }}
+      animate={{ opacity: 1, transform: "translateX(0)" }}
+      transition={{ duration: 0.5, delay: index * 0.1 + 1 }}
       style={{
-        translate: `${position.left}px ${position.top}px`,
-        width: buttonWidth,
-        height: buttonWidth,
+        left: `${position.left}px`,
+        top: `${position.top}px`,
       }}
-      onClick={() => (location.hash = title.toLowerCase())}
+      onDoubleClick={() => (location.hash = title.toLowerCase())}
     >
       <Icon {...iconProps} />
-    </button>
+    </motion.button>
   );
 }
+
+FloatingButton.displayName = "FloatingButton";

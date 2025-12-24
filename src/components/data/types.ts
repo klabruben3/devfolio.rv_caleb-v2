@@ -1,3 +1,4 @@
+import { LucideIcon } from "lucide-react";
 export interface Project {
   title: string;
   description: string;
@@ -8,10 +9,23 @@ export interface Project {
 }
 
 export interface StatProps {
-  icon: React.ElementType;
+  icon: LucideIcon;
   label: string;
   value: number;
   suffix?: string;
   prefix?: string;
   decimals?: number;
+}
+
+export interface FloatButton {
+  title: string;
+  icon: LucideIcon;
+  position: { left: number; top: number };
+  index: number;
+  iconProps?: React.ComponentProps<React.ElementType>;
+}
+
+export interface NavLink {
+  title: string;
+  icon: LucideIcon;
 }

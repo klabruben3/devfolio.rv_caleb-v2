@@ -1,18 +1,33 @@
 "use client";
 
-import { House } from "lucide-react";
 import { FloatingButton } from "../ui";
+import { useEffect, useState } from "react";
+import { navLinks } from "../data";
 
-function Home() {
+function FloatingLinks() {
+  const [screenWidth, setScreenWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const update = () => setScreenWidth(window.innerWidth);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   return (
-    <FloatingButton
-      title="Home"
-      icon={House}
-      iconProps={{ size: 24, color: "white" }}
-      position={{ left: 50, top: 50 }}
-      buttonWidth={50}
-    />
+    <>
+      {navLinks.map((navLink, i) => (
+        <FloatingButton
+          title={navLink.title}
+          icon={navLink.icon}
+          key={i}
+          index={i}
+          iconProps={{ size: 24, color: "white" }}
+          position={{ left: screenWidth - 65, top: 55 * i + 55 }}
+        />
+      ))}
+    </>
   );
 }
 
-export { Home };
+export { FloatingLinks };
