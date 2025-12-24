@@ -78,16 +78,15 @@ export default function FollowMouse() {
 
         secondTimeout = setTimeout(() => {
           box.classList.remove("border-2", "bg-black", "bg-white");
-          box.classList.add("bg-green-500");
           box.style.transform = "translate(0, 0)";
           accessible = true;
         }, 3100);
 
         thirdTimeout = setTimeout(() => {
           box.classList.remove("opacity-0");
-          box.classList.add("opacity-100", "animate-pulse");
+          box.classList.add("opacity-100", "animate-pulse", "bg-green-500");
           isVisible = false;
-        }, 3200);
+        }, 5000);
       });
     };
 

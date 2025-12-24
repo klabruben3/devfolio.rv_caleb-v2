@@ -4,7 +4,10 @@ import { FollowMouse } from "../effects";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       {/* Terminal-like header */}
       <div className="fixed top-6 left-6 font-mono text-xs text-neutral-600 z-50">
         <div className="flex items-center">

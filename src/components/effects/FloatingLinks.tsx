@@ -15,7 +15,7 @@ function FloatingLinks() {
   }, []);
 
   return (
-    <>
+    <header>
       {navLinks.map((navLink, i) => (
         <FloatingButton
           title={navLink.title}
@@ -26,7 +26,7 @@ function FloatingLinks() {
           position={{ left: screenWidth - 65, top: 55 * i + 55 }}
         />
       ))}
-    </>
+    </header>
   );
 }
 

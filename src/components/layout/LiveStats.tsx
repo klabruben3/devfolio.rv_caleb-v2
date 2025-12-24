@@ -57,7 +57,7 @@ function AnimatedStat({
 
 export default function LiveStats() {
   return (
-    <section className="py-20 px-6 relative overflow-hidden">
+    <section id="live data" className="py-20 px-6 relative overflow-hidden">
       {/* Grid background */}
       <GridBackground />
 
