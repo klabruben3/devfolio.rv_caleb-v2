@@ -4,7 +4,7 @@ import { FloatingButton } from "../ui";
 import { useEffect, useState } from "react";
 import { navLinks } from "../data";
 
-function FloatingLinks() {
+export default function Header() {
   const [screenWidth, setScreenWidth] = useState<number>(0);
 
   useEffect(() => {
@@ -23,11 +23,9 @@ function FloatingLinks() {
           key={i}
           index={i}
           iconProps={{ size: 24, color: "white" }}
-          position={{ left: screenWidth - 65, top: 55 * i + 55 }}
+          position={{ left: screenWidth - 65, top: 55 * (i + 1) }}
         />
       ))}
     </header>
   );
 }
-
-export { FloatingLinks };
