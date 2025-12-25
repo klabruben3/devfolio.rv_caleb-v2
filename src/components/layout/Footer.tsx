@@ -1,4 +1,5 @@
 import { Github, Linkedin, Mail } from "lucide-react";
+import TypeFast from "../effects/TypeFast";
 
 export default function Footer() {
   return (
@@ -57,13 +58,12 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-neutral-500 text-sm">
-          <p>
-            © {new Date().getFullYear()} Developer Portfolio. All rights
-            reserved.
-          </p>
+          <TypeFast>
+            {`© ${new Date().getFullYear().toString()} Developer Portfolio. All rights reserved.`}
+          </TypeFast>
           <p className="text-neutral-600">
             Engineered with precision. Built with{" "}
-            <span className="text-[#06b6d4]">purpose</span>.
+            <span className="text-[#06b6d4] animate-pulse">purpose</span>.
           </p>
         </div>
       </div>
