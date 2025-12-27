@@ -5,7 +5,7 @@ export interface Project {
   tech: string[];
   github: string;
   demo?: string;
-  stats: Record<string, string>;
+  stats: {Created: string, Pushed: string};
 }
 
 export interface StatProps {

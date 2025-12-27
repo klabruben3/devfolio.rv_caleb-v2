@@ -3,7 +3,7 @@ import { motion, animate } from "motion/react";
 import { useEffect, useState } from "react";
 import { StatProps } from "../data/types";
 import { stats } from "../data";
-import { GridBackground } from "./projects/ProjectBits";
+import { GridBackground } from "../features";
 
 function AnimatedStat({
   icon: Icon,

@@ -52,3 +52,4 @@ export const projects: Project[] = [
     stats: { functions: "50+", accuracy: "99.5%" },
   },
 ];
+

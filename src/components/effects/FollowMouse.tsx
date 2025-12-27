@@ -56,6 +56,10 @@ export default function FollowMouse() {
           e.clientX - box.offsetLeft
         }px, ${e.clientY - box.offsetTop}px)`;
 
+        if (box.style.opacity == '0') {
+          box.style.opacity = '1';
+        }
+
         if (!isVisible) {
           box.classList.remove("animate-pulse", "bg-green-500");
           box.classList.add("bg-black", "border-2", "border-white");
@@ -73,20 +77,18 @@ export default function FollowMouse() {
         }
 
         firstTimeout = setTimeout(() => {
-          box.classList.add("opacity-0");
+          box.style.opacity = "0";
         }, 3000);
 
-        secondTimeout = setTimeout(() => {
-          box.classList.remove("border-2", "bg-black", "bg-white");
-          box.style.transform = "translate(0, 0)";
-          accessible = true;
-        }, 3100);
+        secondTimeout = setTimeout(() => {}, 3100);
 
         thirdTimeout = setTimeout(() => {
-          box.classList.remove("opacity-0");
-          box.classList.add("opacity-100", "animate-pulse", "bg-green-500");
+          box.classList.remove("border-2", "bg-black", "bg-white");
+          box.classList.add("animate-pulse", "bg-green-500");
+          box.style.transform = "translate(0, 0)";
+          accessible = true;
           isVisible = false;
-        }, 5000);
+        }, 4000);
       });
     };
 
@@ -113,7 +115,6 @@ export default function FollowMouse() {
         pointer-events-none
         z-50
         bg-green-500
-        opacity-100
         animate-pulse
         transition-[transform,opacity,background-color]
         duration-[100ms]

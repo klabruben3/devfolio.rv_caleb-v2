@@ -2,10 +2,10 @@
 
 import { motion } from "motion/react";
 import { Terminal } from "lucide-react";
-import { projects } from "../../data";
-import { GridBackground, ProjectInfo } from "./ProjectBits";
+import ProjectCards from "./ProjectCards";
+import { GridBackground } from "@/components/features";
 
-export default function Projects() {
+export default function ProjectsClient({ projects }: { projects: any[] }) {
   return (
     <section id="projects" className="py-24 px-6 relative overflow-hidden">
       {/* Grid background */}
@@ -48,7 +48,7 @@ export default function Projects() {
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
-              <ProjectInfo project={project} index={index} />
+              <ProjectCards project={project} index={index} />
             </motion.div>
           ))}
         </div>
