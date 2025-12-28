@@ -14,8 +14,9 @@ export default async function ProjectsServer() {
   );
 
   if (!res.ok) return null;
-
+  
   const repos = await res.json();
+  if (!Array.isArray(repos)) return null;
 
   const projects: Project[] = [];
 
