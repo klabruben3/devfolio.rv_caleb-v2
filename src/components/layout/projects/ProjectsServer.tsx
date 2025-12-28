@@ -29,8 +29,6 @@ export default async function ProjectsServer() {
     )
       continue;
 
-      console.log(repo.name, repo.topics)
-
     const repoInfo: Project = {
       title: repo.name.toUpperCase(),
       description: repo.description,
@@ -46,6 +44,28 @@ export default async function ProjectsServer() {
       repoInfo.demo = "https://klabruben3.github.io/" + repo.name;
     } else if (repo.homepage) {
       repoInfo.demo = repo.homepage;
+    }
+
+    // Fetch the preview images from github
+    const previewRes = await fetch(
+      `https://api.github.com/repos/klabruben3/${repo.name}/contents/public`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          Accept: "application/vnd.github+json",
+        },
+        next: { revalidate: 3600 },
+      }
+    );
+    const previews = await previewRes.json();
+
+    if (Array.isArray(previews)) {
+      for (const img of previews) {
+        if (img.name == "preview.png") {
+          repoInfo.preview = img.download_url;
+          break;
+        }
+      }
     }
 
     projects.push(repoInfo);

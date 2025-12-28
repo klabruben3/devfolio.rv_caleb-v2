@@ -6,6 +6,7 @@ export interface Project {
   github: string;
   demo?: string;
   stats: { Created: string; Pushed: string };
+  preview?: string;
 }
 
 export interface StatProps {

@@ -37,7 +37,8 @@ export default function ProjectsClient({ projects }: { projects: any[] }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group p-8 bg-black/70 border border-white/10 hover:border-[#06b6d4]/50 transition-all duration-300 relative overflow-hidden"
+              tabIndex={1}
+              className="group p-8 bg-black/60 focus:bg-transparent hover:bg-transparent border border-white/10 hover:border-[#06b6d4]/50 transition-all duration-300 relative overflow-hidden"
               style={{
                 boxShadow: "none",
               }}

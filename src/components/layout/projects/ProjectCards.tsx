@@ -14,18 +14,24 @@ export default function ProjectCards({
       <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-white/40 group-hover:border-white" />
       <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-white/40 group-hover:border-white" />
 
+      {project.preview && (
+        <div className="absolute inset-0 z-[-1]">
+          <img src={project.preview} className="w-full h-full object-cover object-center" />
+        </div>
+      )}
+
       {/* Project number */}
-      <div className="absolute top-4 left-4 text-[#06b6d4]/20 font-mono text-xs">
+      <div className="absolute top-4 left-4 text-[#06b6d4]/60 group-hover:text-[#06b6d4] font-mono text-xs">
         {String(index + 1).padStart(2, "0")}
       </div>
 
-      <h3 className="mb-4 mt-6 text-white group-hover:text-[wheat] transition-colors duration-300">
+      <h3 className="mb-4 mt-6 text-[wheat] group-focus:opacity-0 group-hover:opacity-0 transition-[opacity] duration-300">
         {project.title}
       </h3>
-      <p className="mb-6 text-neutral-400">{project.description}</p>
+      <p className="mb-6 text-neutral-400 group-focus:opacity-0 group-hover:opacity-0 transition-[opacity] duration-300">{project.description}</p>
 
       {/* Stats */}
-      <div className="mb-6 p-3 bg-white/5 border border-white/5 font-mono text-xs">
+      <div className="mb-6 p-3 bg-[rgba(39,36,36,0.9)] border border-white/30 font-mono text-xs">
         <div className="flex flex-wrap gap-4">
           {Object.entries(project.stats).map(([key, value]) => (
             <div key={key} className="flex items-center gap-2">

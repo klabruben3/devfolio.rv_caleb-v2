@@ -1,8 +1,8 @@
-const speed: number = 0.00008;
+const speed: number = 0.00005;
 const strokeWidth: number = 0.5;
 const circleRad: number = 1.5;
 const opacT: number = 0.0005;
-const circleCount: number = 15;
+const circleCount: number = 50;
 let opacity: number = 0;
 
 interface CanvasRef {
@@ -24,6 +24,7 @@ interface Vec2 {
 interface Circle extends Vec2 {
   target: Vec2;
   progress: number;
+  isConnected: boolean;
 }
 
 const createRandomPos = (): Vec2 => ({
@@ -47,6 +48,7 @@ const createCircles = (): void => {
       y: initRandPos.y,
       target: createRandomPos(),
       progress: 0,
+      isConnected: false,
     });
   }
 };
@@ -59,14 +61,22 @@ const connectCircles = (): void => {
   ctx.lineCap = "round";
 
   for (const c of circles) {
-    ctx.moveTo(c.x, c.y);
+    c.isConnected = false;
+  }
 
+  for (const c of circles) {
     for (const connectC of circles) {
+      if (c === connectC) continue;
+
       const dx = connectC.x - c.x;
       const dy = connectC.y - c.y;
 
       if (Math.hypot(dx, dy) < 100) {
+        ctx.moveTo(c.x, c.y);
         ctx.lineTo(connectC.x, connectC.y);
+
+        c.isConnected = true;
+        connectC.isConnected = true;
       }
     }
   }
@@ -76,11 +86,13 @@ const connectCircles = (): void => {
 const drawCircles = (): void => {
   const ctx = ctxRef.ctx as OffscreenCanvasRenderingContext2D;
   ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`;
-  ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
   ctx.lineWidth = 0.5;
 
   for (const c of circles) {
     ctx.beginPath();
+    ctx.strokeStyle = c.isConnected
+      ? `rgba(255, 255, 255, ${opacity})`
+      : "black";
     ctx.arc(c.x, c.y, circleRad, 0, 2 * Math.PI);
     ctx.fill();
     ctx.stroke();
