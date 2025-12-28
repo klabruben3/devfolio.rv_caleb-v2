@@ -4,6 +4,8 @@ import "./globals.css";
 import { IntroAnimation } from "@/components/effects";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Footer, Header } from "@/components/layout";
+import Terminal from "@/components/effects/terminal";
+import { SessionProvider } from "next-auth/react";
 
 const jackInput = localFont({
   src: "../assets/fonts/jackinput/JAi_____.woff2",
@@ -31,7 +33,10 @@ export default function RootLayout({
       <body className={`${jackInput.className}`}>
         <IntroAnimation />
         <SpeedInsights />
-        <Header />
+        <Terminal />
+        <SessionProvider>
+          <Header />
+        </SessionProvider>
         <main>{children}</main>
         <Footer />
       </body>

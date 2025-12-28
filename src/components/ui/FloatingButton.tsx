@@ -1,4 +1,5 @@
 "use client";
+import { login, logout } from "./auth";
 
 import { useEffect, useRef } from "react";
 import type { FloatButton } from "../data/types";
@@ -7,6 +8,7 @@ import { motion } from "motion/react";
 export default function FloatingButton({
   title,
   icon: Icon,
+  href,
   position,
   index = 0,
   iconProps,
@@ -105,7 +107,17 @@ export default function FloatingButton({
         left: `${position.left}px`,
         top: `${position.top}px`,
       }}
-      onDoubleClick={() => (location.hash = title.toLowerCase())}
+      onDoubleClick={() => {
+        if (!href) {
+          if (title == "Login to GitHub") {
+            login();
+          } else if (title == "Logout") {
+            logout();
+          }
+        } else {
+          location.href = href;
+        }
+      }}
     >
       <Icon {...iconProps} />
     </motion.button>

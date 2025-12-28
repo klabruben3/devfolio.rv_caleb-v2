@@ -1,6 +1,5 @@
 "use client";
 import { motion } from "motion/react";
-import { FollowMouse } from "../effects";
 
 export default function Hero() {
   return (
@@ -8,14 +7,6 @@ export default function Hero() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Terminal-like header */}
-      <div className="fixed top-6 left-6 font-mono text-xs text-neutral-600 z-50">
-        <div className="flex items-center">
-          <FollowMouse />
-          <span className="ml-3">Admin.online</span>
-        </div>
-      </div>
-
       <div className="relative z-10 max-w-5xl mx-auto text-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
